@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:writing_prompt/domain/bloc/prompt_bloc.dart';
 import 'package:writing_prompt/domain/models/prompt.dart';
+import 'package:writing_prompt/presentation/styles/colors.dart';
+import 'package:writing_prompt/presentation/styles/dimensions.dart';
+import 'package:writing_prompt/presentation/styles/text_styles.dart';
 
 class WritingPromptApp extends StatelessWidget {
   final PromptBloc bloc;
@@ -15,9 +18,9 @@ class WritingPromptApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-             primarySwatch: Colors.blue,
+             primaryColor: titleBarBackground,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page', bloc: bloc),
+      home: MyHomePage(title: 'Writing Prompt', bloc: bloc),
     );
   }
 }
@@ -37,15 +40,30 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(widget.title, style: titleBarTextStyle(),),
+        elevation: 0.0,
+        actions: <Widget>[
+          IconButton(
+          icon: Icon(Icons.refresh),
+          onPressed: (() => widget.bloc.fetchPrompt())
+          ),
+        ],
       ),
       body: Center(
-        child: StreamBuilder<Prompt>(
-          stream: widget.bloc.prompt,
-          builder: (context, snapshot) =>
-              Text(snapshot.data == null ? "N/A" : snapshot.data.prompt),
+        child: Padding(
+          padding: const EdgeInsets.all(screenPadding),
+          child: StreamBuilder<Prompt>(
+            stream: widget.bloc.prompt,
+            builder: (context, snapshot) =>
+                Text(
+                  snapshot.data == null ? "N/A" : snapshot.data.prompt,
+                  style: promptTextStyle(),
+                  textAlign: TextAlign.center,
+                ),
+          ),
         ),
       ),
+       backgroundColor: titleBarBackground,
        // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

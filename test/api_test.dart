@@ -52,8 +52,8 @@ void main() {
     when(promptRemote.count).thenReturn(count);
     when(promptRemote.english).thenReturn(name);
 
-    Completer<PromptRemote> completer = Completer();
-    Completer().complete(promptRemote);
+    Completer<PromptRemote> completer = Completer()
+      ..complete(promptRemote);
     Future<PromptRemote> future = completer.future;
 
     when(api.fetchPrompt()).thenAnswer((_) => Future(() => promptRemote));
