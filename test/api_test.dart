@@ -41,4 +41,32 @@ void main() {
     expect(prompt.count, count);
     expect(prompt.prompt, name);
   });
+
+  test("manager test", () async {
+    const name = "name";
+    const count = 10;
+    var mapper = MockMapper();
+    var api = MockApi();
+
+    var promptRemote = MockPromptRemote();
+    when(promptRemote.count).thenReturn(count);
+    when(promptRemote.english).thenReturn(name);
+
+    Completer<PromptRemote> completer = Completer();
+    Completer().complete(promptRemote);
+    Future<PromptRemote> future = completer.future;
+
+    when(api.fetchPrompt()).thenAnswer((_) => Future(() => promptRemote));
+    var prompt = Prompt(name, count);
+    when(mapper.map(any)).thenReturn(Prompt(name, count));
+
+    var manager = PromptManager(api, mapper);
+
+    manager.getPrompt().listen(
+        expectAsync1((value) {
+          expect(value.prompt, prompt.prompt);
+        }, count: 1));
+  });
+
+
 }
