@@ -4,6 +4,7 @@ import 'package:writing_prompt/domain/models/prompt.dart';
 import 'package:writing_prompt/presentation/styles/colors.dart';
 import 'package:writing_prompt/presentation/styles/dimensions.dart';
 import 'package:writing_prompt/presentation/styles/text_styles.dart';
+import 'package:writing_prompt/presentation/utils/rotating_icon.dart';
 
 class WritingPromptApp extends StatelessWidget {
   final PromptBloc bloc;
@@ -43,10 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title, style: titleBarTextStyle(),),
         elevation: 0.0,
         actions: <Widget>[
-          IconButton(
-          icon: Icon(Icons.refresh),
-          onPressed: (() => widget.bloc.fetchPrompt())
-          ),
+          ImageRotate(widget.bloc),
         ],
       ),
       body: Center(
