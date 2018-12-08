@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:writing_prompt/data/api/prompt_api.dart';
+import 'package:writing_prompt/data/remote/api/prompt_api.dart';
 import 'package:writing_prompt/domain/bloc/prompt_bloc.dart';
 import 'package:writing_prompt/domain/managers/prompt_manager.dart';
 import 'package:writing_prompt/domain/mapper/prompt_mapper.dart';

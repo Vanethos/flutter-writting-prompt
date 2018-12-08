@@ -2,7 +2,7 @@ library serializers;
 
 import 'package:built_value/serializer.dart';
 import 'package:built_value/standard_json_plugin.dart';
-import 'package:writing_prompt/data/model/prompt_remote.dart';
+import 'package:writing_prompt/data/remote/model/prompt_remote.dart';
 
 part 'serializers.g.dart';
 

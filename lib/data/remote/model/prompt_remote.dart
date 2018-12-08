@@ -3,7 +3,7 @@ import 'dart:convert' as json;
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-import 'package:writing_prompt/data/serializers/serializers.dart';
+import 'package:writing_prompt/data/remote/serializers/serializers.dart';
 
 part 'prompt_remote.g.dart';
 

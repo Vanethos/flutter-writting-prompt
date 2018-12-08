@@ -1,5 +1,5 @@
 import 'package:writing_prompt/common/mapper.dart';
-import 'package:writing_prompt/data/model/prompt_remote.dart';
+import 'package:writing_prompt/data/remote/model/prompt_remote.dart';
 import 'package:writing_prompt/domain/models/prompt.dart';
 
 class PromptMapper extends Mapper<PromptRemote, Prompt> {

@@ -1,4 +1,4 @@
-import 'package:writing_prompt/data/model/prompt_remote.dart';
+import 'package:writing_prompt/data/remote/model/prompt_remote.dart';
 import 'dart:async';
 
 import 'package:http/http.dart' as http;

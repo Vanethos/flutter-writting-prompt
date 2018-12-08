@@ -1,8 +1,8 @@
 import 'package:rxdart/rxdart.dart';
 import 'package:test/test.dart';
 import 'dart:async';
-import 'package:writing_prompt/data/api/prompt_api.dart';
-import 'package:writing_prompt/data/model/prompt_remote.dart';
+import 'package:writing_prompt/data/remote/api/prompt_api.dart';
+import 'package:writing_prompt/data/remote/model/prompt_remote.dart';
 import 'package:writing_prompt/domain/managers/prompt_manager.dart';
 import 'package:writing_prompt/domain/mapper/prompt_mapper.dart';
 import 'package:mockito/mockito.dart';

@@ -1,5 +1,5 @@
 import 'package:rxdart/rxdart.dart';
-import 'package:writing_prompt/data/api/prompt_api.dart';
+import 'package:writing_prompt/data/remote/api/prompt_api.dart';
 import 'package:writing_prompt/domain/mapper/prompt_mapper.dart';
 import 'package:writing_prompt/domain/models/prompt.dart';
 
