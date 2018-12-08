@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:writing_prompt/main.dart';
-import 'package:writing_prompt/presentation/ui/home.dart';
+import 'package:writing_prompt/presentation/ui/single_prompt.dart';
 
 void main() {
 

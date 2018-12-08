@@ -1,68 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:writing_prompt/domain/bloc/prompt_bloc.dart';
-import 'package:writing_prompt/domain/models/prompt.dart';
-import 'package:writing_prompt/presentation/styles/colors.dart';
-import 'package:writing_prompt/presentation/styles/dimensions.dart';
-import 'package:writing_prompt/presentation/styles/text_styles.dart';
-import 'package:writing_prompt/presentation/utils/rotating_icon.dart';
+import 'package:writing_prompt/presentation/styles/strings.dart';
+import 'package:writing_prompt/presentation/ui/prompt_list.dart';
+import 'package:writing_prompt/presentation/ui/single_prompt.dart';
 
-class WritingPromptApp extends StatelessWidget {
+class HomePage extends StatefulWidget {
   final PromptBloc bloc;
 
-  WritingPromptApp({
-    Key key,
-    this.bloc
-  }) : super(key: key);
+  HomePage({Key key, this.bloc}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-             primaryColor: titleBarBackground,
-      ),
-      home: MyHomePage(title: 'Writing Prompt', bloc: bloc),
-    );
+  State<StatefulWidget> createState() {
+    return _HomePageState();
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  final PromptBloc bloc;
+class _HomePageState extends State<HomePage> {
+  int _currentIndex = 0;
+  List<Widget> _children = [];
 
-  MyHomePage({Key key, this.title, this.bloc}) : super(key: key);
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
+    if (_children.isEmpty) {
+      buildChildren(context);
+    }
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title, style: titleBarTextStyle(),),
-        elevation: 0.0,
-        actions: <Widget>[
-          ImageRotate(widget.bloc),
+      body: _children[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: onTabTapped,
+        currentIndex: _currentIndex,
+        items: [
+          BottomNavigationBarItem(
+            icon: new Icon(Icons.home),
+            title: new Text(navigationSinglePrompt),
+          ),
+          BottomNavigationBarItem(
+            icon: new Icon(Icons.list),
+            title: new Text(navigationPromptList),
+          )
         ],
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(screenPadding),
-          child: StreamBuilder<Prompt>(
-            stream: widget.bloc.prompt,
-            builder: (context, snapshot) =>
-                Text(
-                  snapshot.data == null ? "N/A" : snapshot.data.prompt,
-                  style: promptTextStyle(),
-                  textAlign: TextAlign.center,
-                ),
-          ),
-        ),
-      ),
-       backgroundColor: titleBarBackground,
-       // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  void onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
+  void buildChildren(BuildContext context) {
+    _children = [
+      SinglePromptPage(bloc: widget.bloc, title: appName),
+      PromptListPage(bloc: widget.bloc, title: appName),
+    ];
   }
 }

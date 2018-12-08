@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:writing_prompt/domain/bloc/prompt_bloc.dart';
+import 'package:writing_prompt/presentation/styles/dimensions.dart';
 
-class ImageRotate extends StatefulWidget {
+class RefreshPrompt extends StatefulWidget {
   PromptBloc bloc;
 
-  ImageRotate(this.bloc);
+  RefreshPrompt(this.bloc);
 
   @override
-  _ImageRotateState createState() => new _ImageRotateState();
+  _RefreshPromptState createState() => new _RefreshPromptState();
 }
 
-class _ImageRotateState extends State<ImageRotate>
+class _RefreshPromptState extends State<RefreshPrompt>
     with SingleTickerProviderStateMixin {
   AnimationController _animationController;
 
@@ -42,6 +43,7 @@ class _ImageRotateState extends State<ImageRotate>
       child: new RotationTransition(
         turns: _animationController,
         child: IconButton(
+            iconSize: refreshButtonSize,
             icon: Icon(Icons.refresh),
             onPressed: (() {
               widget.bloc.fetchPrompt();
