@@ -19,7 +19,7 @@ class PromptLocalInverseMapper extends Mapper<Prompt, PromptLocal> {
     if (value == null) {
       return null;
     }
-    return new PromptLocal(value.count, value.prompt, false);
+    return new PromptLocal(value.count, value.prompt, value.done);
   }
 }
 

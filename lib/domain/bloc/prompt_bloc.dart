@@ -9,31 +9,37 @@ class PromptBloc {
 
   final _promptSubject = BehaviorSubject<Prompt>();
   final _promptHistorySubject = BehaviorSubject<List<Prompt>>();
+  final _promptCheckSubject = BehaviorSubject<Prompt>();
 
   Stream<Prompt> get prompt => _promptSubject.stream;
   Stream<List<Prompt>> get promptHistory => _promptHistorySubject.stream;
 
   PromptBloc(this._promptManager) {
     fetchPrompt();
-    getPromptHistory();
+    _getPromptHistory();
+    _promptCheckUpdate();
   }
 
   Observable<int> insertPrompt(Prompt prompt) {
     return _promptManager.insertPrompt(prompt)
-        .flatMap((_) => getPromptHistory())
+        .flatMap((_) => _getPromptHistory())
         // hammering time since we don't have a completable
         .map((_) => 1);
   }
 
-  Observable<List<Prompt>> getPromptHistory() {
+  Observable<List<Prompt>> _getPromptHistory() {
     return _promptManager.getListOfPrompts()
         .map((prompts) => prompts.reversed.toList())
-        .map(addHistoryToSubject);
+        .map(_addHistoryToSubject);
   }
 
-  List<Prompt> addHistoryToSubject(List<Prompt> prompts) {
+  List<Prompt> _addHistoryToSubject(List<Prompt> prompts) {
     _promptHistorySubject.add(prompts);
     return prompts;
+  }
+
+  void updatePrompt(Prompt prompt) {
+    _promptCheckSubject.add(prompt);
   }
 
   void fetchPrompt() {
@@ -44,5 +50,10 @@ class PromptBloc {
         })
         .flatMap(insertPrompt)
         .listen((_) => _);
+  }
+
+  void _promptCheckUpdate() {
+    _promptCheckSubject
+      .listen(_promptManager.updatePrompt);
   }
 }

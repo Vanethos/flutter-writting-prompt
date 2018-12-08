@@ -25,7 +25,7 @@ class _PromptListPageState extends State<PromptListPage> {
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(screenPadding),
+          padding: const EdgeInsets.only(top: screenPadding, left: screenPadding, right: screenPadding),
           child: StreamBuilder<List<Prompt>>(
             stream: widget.bloc.promptHistory,
             builder: (context, snapshot) =>
@@ -55,6 +55,7 @@ class _PromptListPageState extends State<PromptListPage> {
                 onChanged: (bool newValue) {
                   setState(() {
                     prompt.done = newValue;
+                    widget.bloc.updatePrompt(prompt);
                   });
                 }
             )

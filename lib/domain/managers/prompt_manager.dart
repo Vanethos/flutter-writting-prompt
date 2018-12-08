@@ -26,9 +26,8 @@ class PromptManager {
       Observable.fromFuture(_dbHelper.getPrompts())
       .map((prompts) => _localMapper.mapList(prompts));
 
-  Observable<int> updatePrompt(Prompt prompt, bool checked) {
+  Observable<int> updatePrompt(Prompt prompt) {
     var local = _localInverseMapper.map(prompt);
-    local.done = checked;
     return Observable.fromFuture(
         _dbHelper.update(local)
     );
