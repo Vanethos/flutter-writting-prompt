@@ -3,6 +3,7 @@ import 'package:writing_prompt/domain/bloc/prompt_bloc.dart';
 import 'package:writing_prompt/domain/models/prompt.dart';
 import 'package:writing_prompt/presentation/styles/colors.dart';
 import 'package:writing_prompt/presentation/styles/dimensions.dart';
+import 'package:writing_prompt/presentation/styles/strings.dart';
 import 'package:writing_prompt/presentation/styles/text_styles.dart';
 import 'package:writing_prompt/presentation/utils/refresh_button.dart';
 
@@ -34,9 +35,10 @@ class _SinglePromptPageState extends State<SinglePromptPage> {
                   stream: widget.bloc.prompt,
                   builder: (context, snapshot) =>
                       Text(
-                        snapshot.data == null ? "N/A" : snapshot.data.prompt,
+                        snapshot.data == null ? emptyPrompt : snapshot.data.prompt,
                         style: promptTextStyle(),
                         textAlign: TextAlign.center,
+                        key: Key(key_prompt_text),
                       ),
                 ),
                 alignment: Alignment(0, 1),

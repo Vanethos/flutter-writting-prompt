@@ -27,6 +27,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
+        key: Key(key_bottom_bar),
         onTap: onTabTapped,
         currentIndex: _currentIndex,
         items: [

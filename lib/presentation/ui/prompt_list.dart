@@ -3,6 +3,7 @@ import 'package:writing_prompt/domain/bloc/prompt_bloc.dart';
 import 'package:writing_prompt/domain/models/prompt.dart';
 import 'package:writing_prompt/presentation/styles/colors.dart';
 import 'package:writing_prompt/presentation/styles/dimensions.dart';
+import 'package:writing_prompt/presentation/styles/strings.dart';
 import 'package:writing_prompt/presentation/styles/text_styles.dart';
 
 class PromptListPage extends StatefulWidget {
@@ -29,8 +30,13 @@ class _PromptListPageState extends State<PromptListPage> {
           child: StreamBuilder<List<Prompt>>(
             stream: widget.bloc.promptHistory,
             builder: (context, snapshot) =>
-              snapshot.data == null ? Text("No Entries") :
+              snapshot.data == null ?
+                Text(
+                    emptyHistory,
+                    key : Key(key_empty_history_text)
+                ) :
                 ListView(
+                  key: Key(key_history_list),
                   children: snapshot.data.map(_buildItem).toList(),
                 ),
           ),
