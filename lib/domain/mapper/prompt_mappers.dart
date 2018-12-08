@@ -6,13 +6,19 @@ import 'package:writing_prompt/domain/models/prompt.dart';
 class PromptRemoteMapper extends Mapper<PromptRemote, Prompt> {
   @override
   Prompt map(PromptRemote value) {
-    return new Prompt(value.english, value.count);
+    if (value == null) {
+      return null;
+    }
+    return new Prompt(value.english, value.count, false);
   }
 }
 
 class PromptLocalInverseMapper extends Mapper<Prompt, PromptLocal> {
   @override
   PromptLocal map(Prompt value) {
+    if (value == null) {
+      return null;
+    }
     return new PromptLocal(value.count, value.prompt, false);
   }
 }
@@ -20,7 +26,10 @@ class PromptLocalInverseMapper extends Mapper<Prompt, PromptLocal> {
 class PromptLocalMapper extends Mapper<PromptLocal, Prompt> {
   @override
   Prompt map(PromptLocal value) {
-    return new Prompt(value.prompt, value.id);
+    if (value == null) {
+      return null;
+    }
+    return new Prompt(value.prompt, value.id, value.done);
   }
 }
 

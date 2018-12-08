@@ -4,7 +4,6 @@ import 'package:writing_prompt/domain/models/prompt.dart';
 import 'package:writing_prompt/presentation/styles/colors.dart';
 import 'package:writing_prompt/presentation/styles/dimensions.dart';
 import 'package:writing_prompt/presentation/styles/text_styles.dart';
-import 'package:writing_prompt/presentation/utils/refrexh_button.dart';
 
 class PromptListPage extends StatefulWidget {
   final PromptBloc bloc;
@@ -27,19 +26,46 @@ class _PromptListPageState extends State<PromptListPage> {
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(screenPadding),
-          child: StreamBuilder<Prompt>(
-            stream: widget.bloc.prompt,
+          child: StreamBuilder<List<Prompt>>(
+            stream: widget.bloc.promptHistory,
             builder: (context, snapshot) =>
-                Text(
-                  "Second screen",
-                  style: promptTextStyle(),
-                  textAlign: TextAlign.center,
+              snapshot.data == null ? Text("No Entries") :
+                ListView(
+                  children: snapshot.data.map(_buildItem).toList(),
                 ),
           ),
         ),
       ),
       backgroundColor: titleBarBackground,
       // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+
+  Widget _buildItem(Prompt prompt) {
+    return Container(
+      child: Padding(
+        padding: const EdgeInsets.only(left: screenPadding, right: screenPadding, bottom: listPadding, top: listPadding),
+        child: Row(
+          children: <Widget>[
+            Expanded(
+                child: Text(prompt.prompt)
+            ),
+            Checkbox(
+                value: prompt.done == null ? false : prompt.done,
+                onChanged: (bool newValue) {
+                  setState(() {
+                    prompt.done = newValue;
+                  });
+                }
+            )
+          ],
+        ),
+      ),
+      decoration: BoxDecoration(
+          border: new Border(
+              bottom: new BorderSide()
+          )
+      ),
     );
   }
 }

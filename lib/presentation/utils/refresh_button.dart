@@ -37,22 +37,17 @@ class _RefreshPromptState extends State<RefreshPrompt>
 
   @override
   Widget build(BuildContext context) {
-    return new Container(
-      alignment: Alignment.center,
-      color: Colors.white,
-      child: new RotationTransition(
+    return new RotationTransition(
         turns: _animationController,
         child: IconButton(
-            iconSize: refreshButtonSize,
-            icon: Icon(Icons.refresh),
-            onPressed: (() {
-              widget.bloc.fetchPrompt();
-              if (!_animationController.isAnimating) {
-                _animationController.forward();
-              }
-            })
-        ),
-      ),
+        iconSize: refreshButtonSize,
+        icon: Icon(Icons.refresh),
+        onPressed: (() {
+          widget.bloc.fetchPrompt();
+          if (!_animationController.isAnimating) {
+          _animationController.forward();
+          }
+      }))
     );
   }
 }

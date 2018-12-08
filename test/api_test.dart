@@ -56,8 +56,8 @@ void main() {
     when(promptRemote.english).thenReturn(name);
 
     when(api.fetchPrompt()).thenAnswer((_) => Future(() => promptRemote));
-    var prompt = Prompt(name, count);
-    when(remoteMapper.map(any)).thenReturn(Prompt(name, count));
+    var prompt = Prompt(name, count, false);
+    when(remoteMapper.map(any)).thenReturn(prompt);
 
     var manager = PromptManager(api, remoteMapper, localInverseMapper, localMapper, db);
 
