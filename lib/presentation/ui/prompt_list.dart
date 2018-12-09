@@ -61,7 +61,7 @@ class _PromptListPageState extends State<PromptListPage> {
                 onChanged: (bool newValue) {
                   setState(() {
                     prompt.done = newValue;
-                    widget.bloc.updatePrompt(prompt);
+                    widget.bloc.promptUpdate.add(prompt);
                   });
                 }
             )
