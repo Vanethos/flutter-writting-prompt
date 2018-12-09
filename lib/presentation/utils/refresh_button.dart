@@ -43,7 +43,7 @@ class _RefreshPromptState extends State<RefreshPrompt>
         iconSize: refreshButtonSize,
         icon: Icon(Icons.refresh),
         onPressed: (() {
-          widget.bloc.fetchPrompt();
+          widget.bloc.fetchPrompt.add(0);
           if (!_animationController.isAnimating) {
           _animationController.forward();
           }

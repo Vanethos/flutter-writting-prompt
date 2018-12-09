@@ -1,4 +1,3 @@
-import 'package:rxdart/rxdart.dart';
 import 'package:test/test.dart';
 import 'dart:async';
 import 'package:writing_prompt/data/remote/api/prompt_api.dart';

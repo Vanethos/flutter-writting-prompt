@@ -9,22 +9,43 @@ class PromptBloc {
 
   final _promptSubject = BehaviorSubject<Prompt>();
   final _promptHistorySubject = BehaviorSubject<List<Prompt>>();
-  final _promptCheckSubject = BehaviorSubject<Prompt>();
+  final _promptUpdateSubject = PublishSubject<Prompt>();
+  final _promptInsertSubject = PublishSubject<Prompt>();
+  final _fetchPromptSubject = PublishSubject<int>();
+
+
 
   Stream<Prompt> get prompt => _promptSubject.stream;
   Stream<List<Prompt>> get promptHistory => _promptHistorySubject.stream;
+  Sink<Prompt> get promptUpdate => _promptUpdateSubject.sink;
+  Sink<Prompt> get promptInsert => _promptInsertSubject.sink;
+  Sink<int> get fetchPrompt => _fetchPromptSubject.sink;
 
   PromptBloc(this._promptManager) {
-    fetchPrompt();
     _getPromptHistory();
-    _promptCheckUpdate();
+
+    _promptUpdateSubject
+        .listen(_updatePrompt);
+
+    _promptInsertSubject
+      .listen(_insertPrompt);
+
+    _fetchPromptSubject
+      .listen((_) => _fetchPrompt());
+
+    // fetches first prompt
+    fetchPrompt.add(0);
   }
 
-  Observable<int> insertPrompt(Prompt prompt) {
-    return _promptManager.insertPrompt(prompt)
+  void _updatePrompt(Prompt prompt) {
+    _promptManager.updatePrompt(prompt)
+        .listen((_) => _);
+  }
+
+  void _insertPrompt(Prompt prompt) {
+    _promptManager.insertPrompt(prompt)
         .flatMap((_) => _getPromptHistory())
-        // hammering time since we don't have a completable
-        .map((_) => 1);
+        .listen((_) => _);
   }
 
   Observable<List<Prompt>> _getPromptHistory() {
@@ -38,22 +59,12 @@ class PromptBloc {
     return prompts;
   }
 
-  void updatePrompt(Prompt prompt) {
-    _promptCheckSubject.add(prompt);
-  }
-
-  void fetchPrompt() {
+  void _fetchPrompt() {
     _promptManager.getPrompt()
         .map((prompt) {
           _promptSubject.add(prompt);
           return prompt;
         })
-        .flatMap(insertPrompt)
-        .listen((_) => _);
-  }
-
-  void _promptCheckUpdate() {
-    _promptCheckSubject
-      .listen(_promptManager.updatePrompt);
+        .listen(_promptInsertSubject.add);
   }
 }
